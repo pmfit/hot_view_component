@@ -9,7 +9,11 @@ module HotViewComponents
     config.autoload_paths << File.expand_path('./action_view.rb', __dir__)
     config.autoload_paths << File.expand_path('./api.rb', __dir__)
 
-    initializer "my-engine.importmap", before: "importmap" do |app|
+    initializer "hot_view_components.assets" do
+      Rails.application.config.assets.paths << Rails.root.join("app/components")
+    end
+
+    initializer "hot_view_components.importmap", before: "importmap" do |app|
       app.config.importmap.paths << Engine.root.join("config/importmap.rb")
     end
   end
