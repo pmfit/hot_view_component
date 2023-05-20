@@ -22,21 +22,10 @@ $ gem install hot_view_components
 
 ## Usage
 
-This gem works in two ways:
-
-- Importmap implementation
-- Webpacker/JSBundler implementation
-
-To use with importmaps, execute:
+To setup the integration, execute:
 
 ```
-bin/rails hot_view_components:importmaps
-```
-
-To use with Webpacker/JSBundler, execute:
-
-```
-bin/rails hot_view_components:bundling
+bin/rails hot_view_components:install
 ```
 
 Then generate your first hot view component:
