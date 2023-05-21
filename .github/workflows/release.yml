@@ -19,7 +19,7 @@ on:
     outputs:
       debug:
         description: "Enable SSH debugging"
-        value: ${{ steps.persist-inputs.outputs.DEBUG }}
+        value: ${{ jobs.version_bump.outputs.debug }}
 
 jobs:
   version_bump:
@@ -33,6 +33,7 @@ jobs:
     outputs:
       currentGemVersion: ${{ steps.current_version.outputs.GEM_VERSION }}
       newGemVersion: ${{ steps.new_version.outputs.GEM_VERSION }}
+      debug: ${{ steps.persist-inputs.outputs.DEBUG }}
 
     steps:
       - uses: actions/checkout@v3
