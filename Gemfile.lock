@@ -177,6 +177,7 @@ DEPENDENCIES
   hot_view_components!
   sprockets-rails
   sqlite3
+  thor (~> 1.2)
 
 BUNDLED WITH
    2.4.6
