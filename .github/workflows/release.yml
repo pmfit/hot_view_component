@@ -48,10 +48,10 @@ jobs:
 
       - name: Automated Version Bump (Ruby)
         run: |
-          bin/bundle config unset frozen
+          mv .bundle .bundle.bak
           bin/bundle exec bin/version bump ${{ inputs.releaseType }}
           bin/bundle
-          bin/bundle config frozen true
+          mv .bundle.bak .bundle
 
       - name: Get new version
         id: new_version
