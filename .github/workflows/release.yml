@@ -69,7 +69,8 @@ jobs:
           echo "Tag created: ${{ steps.tag_create.outputs.tag_exists }}"
 
   release_to_github_packages:
-    if: ${{ jobs.version_bump.outputs.hasNewGemVersion }} == true
+    needs: version_bump
+    if: ${{ needs.version_bump.outputs.hasNewGemVersion }} == true
     uses: pmfit/hot_view_components/.github/workflows/release-github.yml@main
     with:
       debug: ${{ inputs.debug }}
