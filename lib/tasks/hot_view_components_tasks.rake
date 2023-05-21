@@ -3,13 +3,13 @@ require 'hot_view_components/manifest'
 namespace :hot_view_component do
   desc "Install HotViewComponent into the app"
   task :install do
-    if File.readlines(Rails.application.root.join('Gemfile')).grep(/gem "view_component"/).count.zero?
+    if File.readlines(Rails.application.root.join('Gemfile')).grep(/gem ["|']view_component["|']/).count.zero?
       puts %(
         HotViewComponent extends the ViewComponent gem. 
         
         Run "bin/bundle add view_component" and re-run this installer.
       ).split("\n").map(&:lstrip).join("\n")
-    elsif File.readlines(Rails.application.root.join('Gemfile')).grep(/gem "stimulus-rails"/).count.zero?
+    elsif File.readlines(Rails.application.root.join('Gemfile')).grep(/gem ["|']stimulus-rails["|']/).count.zero?
       puts %(
         Hot view components extends the stimulus-rails gem. 
         
