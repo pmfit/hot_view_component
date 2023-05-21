@@ -1,0 +1,36 @@
+name: Build & Release Gem
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: "Release type"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - "patch"
+          - "minor"
+          - "major"
+jobs:
+  version_bump:
+    if: github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    outputs:
+      gemVersion: ${{ steps.get_version.outputs.PACKAGE_VERSION }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: client
+        with:
+          tag-prefix: "v"
+          version-type: ${{ inputs.releaseType }}
+          commit-message: "chore(ci): bump version to {{version}}"
