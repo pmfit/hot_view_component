@@ -21,8 +21,8 @@ jobs:
       contents: write
 
     outputs:
-      currentGemVersion: ${{ steps.current_version.outputs.CURRENT_GEM_VERSION }}
-      newGemVersion: ${{ steps.new_version.outputs.NEW_GEM_VERSION }}
+      currentGemVersion: ${{ steps.current_version.outputs.GEM_VERSION }}
+      newGemVersion: ${{ steps.new_version.outputs.GEM_VERSION }}
 
     steps:
       - uses: actions/checkout@v3
@@ -32,23 +32,26 @@ jobs:
 
       - name: Get current version
         id: current_version
-        run: echo "CURRENT_GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
 
       - name: Automated Version Bump (Ruby)
         run: bin/version bump
 
       - name: Get new version
         id: new_version
-        run: echo "NEW_GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
+        uses: stefanzweifel/git-auto-commit-action@v4
 
-      - uses: rickstaa/action-create-tag@v1
+      - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
         id: "tag_create"
+        uses: rickstaa/action-create-tag@v1
         with:
           tag: "${{ steps.get_version.outputs.GEM_VERSION }}"
           tag_exists_error: false
           message: "chore(ci): bump version to ${{ steps.get_version.outputs.GEM_VERSION }}"
 
-      - run: |
+      - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
+        run: |
           echo "Tag created: ${{ steps.tag_create.outputs.tag_exists }}"
