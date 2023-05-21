@@ -64,18 +64,7 @@ jobs:
         with:
           commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           file_pattern: 'Gemfile.lock lib/hot_view_components/version.rb'
-
-      - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
-        id: "tag_create"
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: "${{ steps.new_version.outputs.NEW_VERSION }}"
-          tag_exists_error: true
-          message: "chore(ci): bump version to ${{ steps.new_version.outputs.NEW_VERSION }}"
-
-      - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
-        run: |
-          echo "Tag created: ${{ steps.tag_create.outputs.tag_exists }}"
+          tagging_message: 'v${{ steps.new_version.outputs.NEW_VERSION }}'
 
   release_to_github_packages:
     needs: version_bump
