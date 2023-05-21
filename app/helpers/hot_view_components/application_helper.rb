@@ -1,10 +1,5 @@
-module Rails
-  module Hotwire
-    module View
-      module Components
-        module ApplicationHelper
-        end
-      end
-    end
+
+module HotViewComponent
+  module ApplicationHelper
   end
 end
