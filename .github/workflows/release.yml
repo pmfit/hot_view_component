@@ -11,6 +11,16 @@ on:
           - "patch"
           - "minor"
           - "major"
+      debug:
+        description: "Enable SSH debugging"
+        required: false
+        default: false
+        type: boolean
+    outputs:
+      debug:
+        description: "Enable SSH debugging"
+        value: ${{ inputs.debug }}
+
 jobs:
   version_bump:
     if: github.ref == 'refs/heads/main'
@@ -30,7 +40,8 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: Setup SSH session
+      - if: ${{ inputs.debug }} == true
+        name: Setup SSH session
         uses: lhotari/action-upterm@v1
         with:
           ## limits ssh access and adds the ssh public keys of the listed GitHub users
@@ -41,7 +52,7 @@ jobs:
         run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
 
       - name: Automated Version Bump (Ruby)
-        run: bin/version bump
+        run: bin/version bump ${{ inputs.releaseType }}
 
       - name: Get new version
         id: new_version

@@ -6,6 +6,8 @@ on:
       - completed
 jobs:
   release_to_github_packages:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +16,8 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: Setup SSH session
+      - if: ${{ github.event.workflow_run.outputs.debug }} == true
+        name: Setup SSH session
         uses: lhotari/action-upterm@v1
         with:
           ## limits ssh access and adds the ssh public keys of the listed GitHub users
