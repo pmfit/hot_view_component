@@ -63,7 +63,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.NEW_VERSION }}"
-          file_pattern: '(Gemfile.lock|lib/hot_view_components/version.rb)'
+          file_pattern: 'Gemfile.lock lib/hot_view_components/version.rb'
 
       - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
         id: "tag_create"
