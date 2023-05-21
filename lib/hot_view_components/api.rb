@@ -3,6 +3,7 @@
 module HotViewComponents
   module Api
     def method_missing(name, *args, **kwargs, &)
+      puts name
       if name.ends_with?('Component')
 
         view = args[0]

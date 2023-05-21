@@ -13,12 +13,12 @@ class HotComponentGenerator < Rails::Generators::NamedBase # :nodoc:
     @class_name = component_class
 
     template "component.rb", "app/components/#{component_name}_component.rb"
-    template "view.html.erb", "app/components/#{component_name}_component.html.erb"
-    template "stylesheet.css", "app/components/#{component_name}_component.css"
-    template "controller.js", "app/components/#{component_name}_component_controller.js"
+    template "view.html.erb", "app/components/#{component_name}_component/#{component_name}_component.html.erb"
+    template "stylesheet.css", "app/components/#{component_name}_component/#{component_name}_component.css"
+    template "controller.js", "app/components/#{component_name}_component/#{component_name}_component_controller.js"
 
     # We need to update the stimulus manifest if running in node context (js-bundler or webpacker)
-    rails_command "hot_view_components:manifest:update" unless Rails.root.join("config/importmap.rb").exist?
+    rails_command "hot_view_component:manifest:update" unless Rails.root.join("config/importmap.rb").exist?
   end
 
   private

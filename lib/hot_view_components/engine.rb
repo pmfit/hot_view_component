@@ -11,7 +11,7 @@ module HotViewComponents
 
     initializer "hot_view_components.assets" do |app|
       if app.config.respond_to?(:assets)
-        app.config.assets.paths << Rails.root.join("app/components")
+        app.config.assets.paths << app.root.join("app/components")
       end
     end
 
