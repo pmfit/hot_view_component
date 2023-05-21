@@ -44,30 +44,30 @@ jobs:
 
       - name: Get current version
         id: current_version
-        run: echo "GEM_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "CURRENT_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
       - name: Automated Version Bump (Ruby)
         run: bin/bundle exec bin/version bump ${{ inputs.releaseType }}
 
       - name: Get new version
         id: new_version
-        run: echo "GEM_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "NEW_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
-      - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
+      - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.GEM_VERSION }}"
+          commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           file_pattern: 'lib/hot_view_components/version.rb'
 
-      - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
+      - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
         id: "tag_create"
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: "${{ steps.new_version.outputs.GEM_VERSION }}"
+          tag: "${{ steps.new_version.outputs.NEW_VERSION }}"
           tag_exists_error: true
-          message: "chore(ci): bump version to ${{ steps.new_version.outputs.GEM_VERSION }}"
+          message: "chore(ci): bump version to ${{ steps.new_version.outputs.NEW_VERSION }}"
 
-      - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
+      - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
         run: |
           echo "Tag created: ${{ steps.tag_create.outputs.tag_exists }}"
 
