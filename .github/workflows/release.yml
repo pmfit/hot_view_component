@@ -30,6 +30,12 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      - name: Setup SSH session
+        uses: lhotari/action-upterm@v1
+        with:
+          ## limits ssh access and adds the ssh public keys of the listed GitHub users
+          limit-access-to-users: ncphillips,chrisdmacrae
+
       - name: Get current version
         id: current_version
         run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
