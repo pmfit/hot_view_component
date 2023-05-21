@@ -24,12 +24,12 @@ module Version
     end
 
     desc 'version', 'Prints the current version'
-    def print_version
+    def print
       puts get_version
     end
 
     desc 'version', 'Prints the current version'
-    def bump_version(type)
+    def bump(type)
       version_parts = get_version.split('.').map(&:to_i)
 
       case type.to_sym
@@ -62,7 +62,7 @@ end
 
 if ARGV.empty?
   # Perform the default, it doesn't have to be a Thor task
-  Version::Commands.new.print_version
+  Version::Commands.new.print
 else
   # Start Thor as usual
   Version::Commands.start(ARGV)
