@@ -35,7 +35,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - if: ${{ inputs.debug }} == true
+      - if: ${{ inputs.debug }}
         name: Setup SSH session
         uses: lhotari/action-upterm@v1
         with:
