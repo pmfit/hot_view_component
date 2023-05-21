@@ -48,10 +48,10 @@ jobs:
 
       - name: Automated Version Bump (Ruby)
         run: |
-          mv .bundle .bundle.bak
+          mv .bundle/config .bundle/config.bak
           bin/bundle exec bin/version bump ${{ inputs.releaseType }}
           bin/bundle
-          mv .bundle.bak .bundle
+          mv .bundle/config.bak .bundle/config
 
       - name: Get new version
         id: new_version
