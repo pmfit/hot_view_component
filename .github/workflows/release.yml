@@ -44,19 +44,19 @@ jobs:
 
       - name: Get current version
         id: current_version
-        run: echo "CURRENT_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "CURRENT_VERSION=$(bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
       - name: Automated Version Bump (Ruby)
         run: |
           mv .bundle .bundle.bak
-          bin/bundle
-          bin/bundle exec bin/version bump ${{ inputs.releaseType }}
+          bundle
+          bundle exec bin/version bump ${{ inputs.releaseType }}
           rm -rf .bundle
           mv .bundle.bak .bundle
 
       - name: Get new version
         id: new_version
-        run: echo "NEW_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "NEW_VERSION=$(bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
       - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
         uses: stefanzweifel/git-auto-commit-action@v4
