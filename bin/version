@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+# This command will automatically be run when you run "rails" with Rails gems
+# installed from the root of your application.
+
+require "thor"
+require "rails/all"
+
+module Version
+  class Constants
+    VERSION_FILE = 'lib/hot_view_components/version'
+  end
+
+  class Commands < Thor
+    include Thor::Actions
+
+    VERSION_TYPE = {
+      patch: :patch,
+      minor: :minor,
+      major: :major
+    }
+
+    def self.exit_on_failure?
+      false
+    end
+
+    desc 'version', 'Prints the current version'
+    def print_version
+      puts get_version
+    end
+
+    desc 'version', 'Prints the current version'
+    def bump_version(type)
+      version_parts = get_version.split('.').map(&:to_i)
+
+      case type.to_sym
+      when VERSION_TYPE[:patch]
+        version_parts[2] += 1
+      when VERSION_TYPE[:minor]
+        version_parts[2] = 0
+        version_parts[1] += 1
+      when VERSION_TYPE[:major]
+        version_parts[2] = 0
+        version_parts[1] = 0
+        version_parts[0] += 1
+      else
+        raise StandardError, 'Unknown version type'
+      end
+
+      gsub_file("#{Version::Constants::VERSION_FILE}.rb", get_version) do |version|
+        version = version_parts.join('.')
+      end
+    end
+
+    private
+    def get_version
+      require_relative "../#{Version::Constants::VERSION_FILE}"
+
+      HotViewComponents::VERSION
+    end
+  end
+end
+
+if ARGV.empty?
+  # Perform the default, it doesn't have to be a Thor task
+  Version::Commands.new.print_version
+else
+  # Start Thor as usual
+  Version::Commands.start(ARGV)
+end
