@@ -1,36 +1,12 @@
-name: Build & Release Gem
+name: Build & Release Gem to Github Packages
 on:
-  workflow_dispatch:
-    inputs:
-      releaseType:
-        description: "Release type"
-        required: true
-        default: "patch"
-        type: choice
-        options:
-          - "patch"
-          - "minor"
-          - "major"
+  workflow_run:
+    workflows: ["Build & Release Gem"]
+    types:
+      - completed
 jobs:
-  version_bump:
-    if: github.ref == 'refs/heads/main'
-
-    permissions:
-      contents: write
+  release_to_github_packages:
     runs-on: ubuntu-latest
 
-    outputs:
-      gemVersion: ${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: "Automated Version Bump"
-        uses: "phips28/gh-action-bump-version@master"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PACKAGEJSON_DIR: client
-        with:
-          tag-prefix: "v"
-          version-type: ${{ inputs.releaseType }}
-          commit-message: "chore(ci): bump version to {{version}}"
+      - run: TODO
