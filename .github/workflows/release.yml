@@ -33,18 +33,13 @@ jobs:
     outputs:
       currentGemVersion: ${{ steps.current_version.outputs.GEM_VERSION }}
       newGemVersion: ${{ steps.new_version.outputs.GEM_VERSION }}
-      debug: ${{ steps.persist-inputs.outputs.DEBUG }}
+      debug: ${{ inputs.debug }}
 
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - id: persist-inputs
-        name: Persist shared inputs
-        run: |
-          echo "DEBUG=${{ inputs.debug }}" >> $GITHUB_OUTPUT
 
       - if: ${{ inputs.debug }} == true
         name: Setup SSH session
