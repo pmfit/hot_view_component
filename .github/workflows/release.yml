@@ -55,14 +55,17 @@ jobs:
 
       - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
         uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.GEM_VERSION }}"
+          file_pattern: 'lib/hot_view_components/version.rb'
 
       - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
         id: "tag_create"
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: "${{ steps.get_version.outputs.GEM_VERSION }}"
-          tag_exists_error: false
-          message: "chore(ci): bump version to ${{ steps.get_version.outputs.GEM_VERSION }}"
+          tag: "${{ steps.new_version.outputs.GEM_VERSION }}"
+          tag_exists_error: true
+          message: "chore(ci): bump version to ${{ steps.new_version.outputs.GEM_VERSION }}"
 
       - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
         run: |
