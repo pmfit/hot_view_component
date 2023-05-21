@@ -1,4 +1,4 @@
-name: Build & Release Gem to Github Packages
+name: Build & Release Gem
 on:
   workflow_run:
     workflows: ["Build & Release Gem"]
