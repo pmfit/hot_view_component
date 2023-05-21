@@ -1,6 +1,6 @@
 require "rails/generators/named_base"
 
-class HotViewComponentGenerator < Rails::Generators::NamedBase # :nodoc:
+class HotComponentGenerator < Rails::Generators::NamedBase # :nodoc:
   source_root File.expand_path("templates", __dir__)
 
   desc "Generates a Hot ViewComponent"
@@ -18,7 +18,7 @@ class HotViewComponentGenerator < Rails::Generators::NamedBase # :nodoc:
     template "controller.js", "app/components/#{component_name}_component_controller.js"
 
     # We need to update the stimulus manifest if running in node context (js-bundler or webpacker)
-    rails_command "stimulus:manifest:update" unless Rails.root.join("config/importmap.rb").exist?
+    rails_command "hot_view_components:manifest:update" unless Rails.root.join("config/importmap.rb").exist?
   end
 
   private

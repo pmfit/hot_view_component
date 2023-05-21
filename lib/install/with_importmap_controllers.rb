@@ -4,12 +4,12 @@ def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
 end
 
-unless File.readlines(importmap_entrypoint_path).grep('pin "@hotwired/turbo-rails", to: "turbo.min.js"').present?
+unless File.readlines(importmap_entrypoint_path).grep('pin "@hotwired/turbo-rails", to: "turbo.min.js"')
   say "Setting up Turbo"
   system! "bin/rails turbo:install"
 end
 
-unless File.readlines(importmap_entrypoint_path).grep('pin "@hotwired/stimulus", to: "stimulus.min.js"').present?
+unless File.readlines(importmap_entrypoint_path).grep('pin "@hotwired/stimulus", to: "stimulus.min.js"')
   say "Setting up Stimulus"
   system! "bin/rails stimulus:install"
 end

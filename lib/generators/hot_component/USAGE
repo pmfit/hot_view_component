@@ -5,7 +5,7 @@ Description:
 
 Examples:
 =========
-    bin/rails generate hot_view_component Example
+    bin/rails generate hot_component Example
 
     creates: app/components/example_component.rb
     creates: app/components/example_component.html.erb
