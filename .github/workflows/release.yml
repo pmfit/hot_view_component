@@ -44,14 +44,14 @@ jobs:
 
       - name: Get current version
         id: current_version
-        run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "GEM_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
       - name: Automated Version Bump (Ruby)
-        run: bin/version bump ${{ inputs.releaseType }}
+        run: bin/bundle exec bin/version bump ${{ inputs.releaseType }}
 
       - name: Get new version
         id: new_version
-        run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+        run: echo "GEM_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
       - if: "${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}"
         uses: stefanzweifel/git-auto-commit-action@v4
