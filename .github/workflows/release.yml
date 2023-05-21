@@ -47,7 +47,9 @@ jobs:
         run: echo "CURRENT_VERSION=$(bin/bundle exec bin/version print)" >> $GITHUB_OUTPUT
 
       - name: Automated Version Bump (Ruby)
-        run: bin/bundle exec bin/version bump ${{ inputs.releaseType }}
+        run: |
+          bin/bundle exec bin/version bump ${{ inputs.releaseType }}
+          bin/bundle
 
       - name: Get new version
         id: new_version
@@ -57,7 +59,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.NEW_VERSION }}"
-          file_pattern: 'lib/hot_view_components/version.rb'
+          file_pattern: '(Gemfile.lock|lib/hot_view_components/version.rb)'
 
       - if: "${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}"
         id: "tag_create"
