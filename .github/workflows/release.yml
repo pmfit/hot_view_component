@@ -51,6 +51,7 @@ jobs:
           mv .bundle .bundle.bak
           bundle
           bundle exec bin/version bump ${{ inputs.releaseType }}
+          bundle
           rm -rf .bundle
           mv .bundle.bak .bundle
 
