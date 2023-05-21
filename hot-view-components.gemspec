@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.7.0"
   spec.add_dependency "rails", ">= 7.0.4.3"
   spec.add_dependency 'view_component', '~> 3.0'
+  spec.add_dependency 'turbo-rails', '~> 1.4.0'
+  spec.add_dependency 'stimulus-rails', '~> 1.2.0'
 end

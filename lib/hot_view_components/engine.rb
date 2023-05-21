@@ -13,8 +13,10 @@ module HotViewComponents
       Rails.application.config.assets.paths << Rails.root.join("app/components")
     end
 
-    initializer "hot_view_components.importmap", before: "importmap" do |app|
-      app.config.importmap.paths << Engine.root.join("config/importmap.rb")
-    end
+      initializer "hot_view_components.importmap", before: "importmap" do |app|
+        if app.config.methods.include? 'importmap'
+          app.config.importmap.paths << Engine.root.join("config/importmap.rb")
+        end
+      end
   end
 end
