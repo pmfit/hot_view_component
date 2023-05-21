@@ -1,0 +1,10 @@
+<% if @module_name.present? %>
+// Available in views as "<%= "#{@module_name}::#{@component_name}" %>(self)
+module <%= @module_name %>
+  class <%= @class_name %> < ViewComponent::Base
+  end
+end
+<% else %>
+class <%= @class_name %> < ViewComponent::Base
+end
+<% end %>

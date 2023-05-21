@@ -1,0 +1,21 @@
+Description:
+============
+    Generates a new Hot ViewComponent at the passed path. If running under node,
+    it'll also call the stimulus:manifest:update task to update the controllers/index.js.
+
+Examples:
+=========
+    bin/rails generate hot_view_component Example
+
+    creates: app/components/example_component.rb
+    creates: app/components/example_component.html.erb
+    creates: app/components/example_component.css
+    creates: app/components/example_component_controller.js
+
+
+    bin/rails generate stimulus nested/example
+
+    creates: app/components/nested/example_component.rb
+    creates: app/components/nested/example_component.html.erb
+    creates: app/components/nested/example_component.css
+    creates: app/components/nested/example_component_controller.js

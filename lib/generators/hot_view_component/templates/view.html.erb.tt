@@ -1,0 +1,6 @@
+<div 
+  data-controller="<%= @controller_name %>"
+  class="<%= @controller_name %>"
+>
+  Hello from <%= @component_name %>
+</p>

@@ -34,10 +34,6 @@ Then generate your first hot view component:
 bin/rails generate hot_component ExampleComponent
 ```
 
-> You can use a short-hand syntax, too:
->
-> `bin/rails g hc ExampleComponent
-
 ## Contributing
 Contribution directions go here.
 
