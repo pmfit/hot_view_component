@@ -1,9 +1,12 @@
 name: Build & Release Gem to Github Packages
 on:
-  workflow_run:
-    workflows: ["Build & Release Gem"]
-    types:
-      - completed
+  workflow_call:
+    inputs:
+      debug:
+        description: "Enable SSH debugging"
+        required: false
+        default: false
+        type: boolean
 jobs:
   release_to_github_packages:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -16,7 +19,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - if: ${{ github.event.workflow_run.outputs.debug }} == true
+      - if: ${{ inputs.debug }} == true
         name: Setup SSH session
         uses: lhotari/action-upterm@v1
         with:
