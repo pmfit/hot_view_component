@@ -15,12 +15,14 @@ jobs:
   version_bump:
     if: github.ref == 'refs/heads/main'
 
-    permissions:
-      contents: write
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     outputs:
-      gemVersion: ${{ steps.get_version.outputs.PACKAGE_VERSION }}
+      currentGemVersion: ${{ steps.current_version.outputs.CURRENT_GEM_VERSION }}
+      newGemVersion: ${{ steps.new_version.outputs.NEW_GEM_VERSION }}
 
     steps:
       - uses: actions/checkout@v3
@@ -28,12 +30,18 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      - name: Get current version
+        id: current_version
+        run: echo "CURRENT_GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+
       - name: Automated Version Bump (Ruby)
         run: bin/version bump
 
-      - name: Get version
-        id: get_version
-        run: echo "GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+      - name: Get new version
+        id: new_version
+        run: echo "NEW_GEM_VERSION=$(bin/version print)" >> $GITHUB_OUTPUT
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
 
       - uses: rickstaa/action-create-tag@v1
         id: "tag_create"
