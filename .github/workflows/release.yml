@@ -48,7 +48,7 @@ jobs:
 
       - name: Automated Version Bump (Ruby)
         run: |
-          bin/bundle config frozen false
+          bin/bundle config unset frozen
           bin/bundle exec bin/version bump ${{ inputs.releaseType }}
           bin/bundle
           bin/bundle config frozen true
