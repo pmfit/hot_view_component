@@ -82,7 +82,7 @@ jobs:
   release_to_rubygems:
     needs: version_bump
 
-    if: ${{ needs.version_bump.outputs.hasNewGemVersion }}
+    # if: ${{ needs.version_bump.outputs.hasNewGemVersion }}
 
     uses: pmfit/hot_view_components/.github/workflows/release-rubygems.yml@main
     with:
@@ -91,7 +91,7 @@ jobs:
   release_to_github_packages:
     needs: version_bump
 
-    if: ${{ needs.version_bump.outputs.hasNewGemVersion }}
+    # if: ${{ needs.version_bump.outputs.hasNewGemVersion }}
 
     uses: pmfit/hot_view_components/.github/workflows/release-github.yml@main
     with:
