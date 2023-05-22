@@ -40,7 +40,7 @@ jobs:
       contents: write
 
     outputs:
-      hasNewGemVersion: ${{ steps.current_version.outputs.GEM_VERSION }} != ${{ steps.new_version.outputs.GEM_VERSION }}
+      hasNewGemVersion: ${{ steps.current_version.outputs.CURRENT_VERSION }} != ${{ steps.new_version.outputs.NEW_VERSION }}
 
     steps:
       - uses: actions/checkout@v3
