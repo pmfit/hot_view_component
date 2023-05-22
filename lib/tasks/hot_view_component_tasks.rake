@@ -1,4 +1,4 @@
-require 'hot_view_components/manifest'
+require 'hot_view_component/manifest'
 
 namespace :hot_view_component do
   desc "Install HotViewComponent into the app"

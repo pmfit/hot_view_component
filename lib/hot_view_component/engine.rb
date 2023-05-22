@@ -11,7 +11,7 @@ module HotViewComponent
     config.autoload_paths << File.expand_path('./action_view.rb', __dir__)
     config.autoload_paths << File.expand_path('./api.rb', __dir__)
 
-    initializer "hot_view_components.modules", after: "importmap.assets" do |app|
+    initializer "hot_view_component.modules", after: "importmap.assets" do |app|
       unless app.config.eager_load
         app.config.to_prepare do
           paths = Dir.glob(app.root.join('app/components/**/*'))
@@ -29,19 +29,19 @@ module HotViewComponent
       end
     end
 
-    initializer "hot_view_components.assets" do |app|
+    initializer "hot_view_component.assets" do |app|
       if app.config.respond_to?(:assets)
         app.config.assets.paths << app.root.join("app/components")
       end
     end
 
-    initializer "hot_view_components.importmap", after: "importmap" do |app|
+    initializer "hot_view_component.importmap", after: "importmap" do |app|
       if app.config.respond_to?(:importmap)
         app.config.importmap.paths = [*app.config.importmap.paths, Engine.root.join("config/importmap.rb")]
       end
     end
 
-    initializer "hot_view_components.importmap.assets", after: "importmap.assets" do |app|
+    initializer "hot_view_component.importmap.assets", after: "importmap.assets" do |app|
       if app.config.respond_to?(:assets)
         app.config.assets.paths << Rails.root.join("app/components")
       end

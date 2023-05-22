@@ -7,7 +7,7 @@ require "rails/all"
 
 module Version
   class Constants
-    VERSION_FILE = 'lib/hot_view_components/version'
+    VERSION_FILE = 'lib/hot_view_component/version'
   end
 
   class Commands < Thor

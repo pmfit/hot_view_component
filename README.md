@@ -7,7 +7,7 @@ A ruby gem to tightly integrate View Components with Hotwire and Rails
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "hot_view_components"
+gem "hot_view_component"
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install hot_view_components
+$ gem install hot_view_component
 ```
 
 ## Usage
@@ -25,10 +25,10 @@ $ gem install hot_view_components
 To setup the integration, execute:
 
 ```
-bin/rails hot_view_components:install
+bin/rails hot_view_component:install
 ```
 
-Then generate your first hot view component:
+Then generate your first hot component:
 
 ```
 bin/rails generate hot_component ExampleComponent

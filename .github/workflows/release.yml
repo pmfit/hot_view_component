@@ -76,7 +76,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore(ci): update Gem version to ${{ steps.new_version.outputs.NEW_VERSION }}"
-          file_pattern: 'Gemfile.lock lib/hot_view_components/version.rb'
+          file_pattern: 'Gemfile.lock lib/hot_view_component/version.rb'
           tagging_message: 'v${{ steps.new_version.outputs.NEW_VERSION }}'
 
   release_to_rubygems:
@@ -84,7 +84,7 @@ jobs:
 
     # if: ${{ needs.version_bump.outputs.hasNewGemVersion }}
 
-    uses: pmfit/hot_view_components/.github/workflows/release-rubygems.yml@main
+    uses: pmfit/hot_view_component/.github/workflows/release-rubygems.yml@main
     with:
       debug: ${{ inputs.debug }}
 
@@ -93,7 +93,7 @@ jobs:
 
     # if: ${{ needs.version_bump.outputs.hasNewGemVersion }}
 
-    uses: pmfit/hot_view_components/.github/workflows/release-github.yml@main
+    uses: pmfit/hot_view_component/.github/workflows/release-github.yml@main
     with:
       debug: ${{ inputs.debug }}
 
