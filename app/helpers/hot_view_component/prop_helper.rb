@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HotViewComponent
-  module PropsHelper
+  module PropHelper
     def prop_valid?(prop, allowed_values)
       return true if prop.blank?
 
@@ -17,7 +17,7 @@ module HotViewComponent
     end
 
     def disallowed_value_message(prop_name, prop)
-      "#{prop_name} has disallowed value: #{prop}"
+      StandardError("#{prop_name} has disallowed value: #{prop}")
     end
   end
 end
