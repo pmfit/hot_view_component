@@ -8,7 +8,7 @@ on:
         default: false
         type: boolean
 jobs:
-  release_to_github_packages:
+  release_to_rubygems:
     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
   
     runs-on: ubuntu-latest

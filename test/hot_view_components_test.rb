@@ -1,7 +1,7 @@
 require "test_helper"
 
-class HotViewComponentsTest < ActiveSupport::TestCase
+class HotViewComponentTest < ActiveSupport::TestCase
   test "it has a version number" do
-    assert HotViewComponents::VERSION
+    assert HotViewComponent::VERSION
   end
 end

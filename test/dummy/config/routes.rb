@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount HotViewComponents::Engine => "/hot-view-components"
+  mount HotViewComponent::Engine => "/hot-view-components"
 end

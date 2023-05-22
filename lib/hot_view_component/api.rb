@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HotViewComponents
+module HotViewComponent
   module Api
     def method_missing(name, *args, **kwargs, &)
       if name.ends_with?('Component')

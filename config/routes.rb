@@ -1,2 +1,2 @@
-HotViewComponents::Engine.routes.draw do
+HotViewComponent::Engine.routes.draw do
 end

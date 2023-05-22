@@ -1,4 +1,4 @@
-# HotViewComponents
+# HotViewComponent
 
 A ruby gem to tightly integrate View Components with Hotwire and Rails
 

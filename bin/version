@@ -55,7 +55,7 @@ module Version
     def get_version
       require_relative "../#{Version::Constants::VERSION_FILE}"
 
-      HotViewComponents::VERSION
+      HotViewComponent::VERSION
     end
   end
 end

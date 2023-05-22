@@ -4,9 +4,9 @@ require 'view_component'
 require_relative './action_view'
 require_relative './api'
 
-module HotViewComponents
+module HotViewComponent
   class Engine < ::Rails::Engine
-    isolate_namespace HotViewComponents
+    isolate_namespace HotViewComponent
 
     config.autoload_paths << File.expand_path('./action_view.rb', __dir__)
     config.autoload_paths << File.expand_path('./api.rb', __dir__)
@@ -22,8 +22,8 @@ module HotViewComponents
           view_components = ::ViewComponent::Base.descendants
           view_components.each do |component|
             module_parent = component.module_parent
-            should_extend = module_parent.present? && module_parent.name.to_s != 'Object' && !module_parent.ancestors.include?(HotViewComponents::Api)
-            module_parent.extend HotViewComponents::Api if should_extend
+            should_extend = module_parent.present? && module_parent.name.to_s != 'Object' && !module_parent.ancestors.include?(HotViewComponent::Api)
+            module_parent.extend HotViewComponent::Api if should_extend
           end
         end
       end

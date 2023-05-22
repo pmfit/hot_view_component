@@ -1,8 +1,8 @@
-require_relative "lib/hot_view_components/version"
+require_relative "lib/hot_view_component/version"
 
 Gem::Specification.new do |spec|
-  spec.name        = "hot_view_components"
-  spec.version     = HotViewComponents::VERSION
+  spec.name        = "hot_view_component"
+  spec.version     = HotViewComponent::VERSION
   spec.authors     = ["chrisdmacrae", "ncphillips"]
   spec.email       = ["contact@pmfit.org"]
   spec.homepage    = "https://github.com/pmfit"

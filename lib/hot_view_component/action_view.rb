@@ -4,6 +4,6 @@ require_relative './api'
 
 module ActionView
   class Base
-    include HotViewComponents::Api
+    include HotViewComponent::Api
   end
 end
