@@ -1,22 +1,40 @@
 # frozen_string_literal: true
 module HotViewComponent
   module Tailwind
+    DEFAULT_BREAKPOINTS = {
+      _: 'mobile',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px'
+    }.freeze
+
+    module ClassMethods
+      def self.breakpoints(breakpoints)
+        define_method :defined_breakpoints do
+          breakpoints
+        end
+      end
+    end
+
     module ResponsiveHelper
       # NOTE: if you change tailwind's breakpoints this will EXPLODE
-      BREAKPOINTS = {
-        _: 'mobile',
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1536px'
-      }.freeze
+
+
+      def self.included(base)
+        base.extend(HotViewComponent::Tailwind::ClassMethods)
+
+        def defined_breakpoints
+          HotViewComponent::Tailwind::DEFAULT_BREAKPOINTS
+        end
+      end
 
       def responsive_classes(prop, classes, get_classes_for_breakpoint = nil)
         return '' if prop.blank? || classes.blank?
 
         if get_classes_for_breakpoint.present? && get_classes_for_breakpoint.respond_to?(:call)
-          classes_for_breakpoint = BREAKPOINTS.keys.each_with_object({}) do |breakpoint, breakpoints|
+          classes_for_breakpoint = self.defined_breakpoints.keys.each_with_object({}) do |breakpoint, breakpoints|
             breakpoint_classes = get_classes_for_breakpoint.call(breakpoint)
 
             breakpoints[breakpoint] = breakpoint_classes if breakpoint_classes
