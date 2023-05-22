@@ -25,11 +25,7 @@ module HotViewComponent
       def initialize(**props)
         props.each do |prop_name, prop_value|
           prop_type = self.send("#{prop_name}_type") if self.respond_to?("#{prop_name}_type")
-          next unless prop_type.present?
-
-          raise MissingPropError, missing_prop_message(prop_name.to_sym) if prop_value.blank? && prop_type[:required]
-
-          next if prop_value.nil? || !self.respond_to?("#{prop_name}_valid?")
+          next if prop_type.nil? || prop_value.nil? || !self.respond_to?("#{prop_name}_valid?")
 
           raise InvalidPropError, unallowed_prop_message(prop_name.to_sym, prop_value) if !responsive_prop?(prop_value) && !self.send("#{prop_name}_valid?", prop_value)
 

@@ -1,7 +1,7 @@
 require "test_helper"
 require "generators/hot_component/hot_component_generator"
 
-module HotViewComponent
+module HotComponent
   class HotComponentGeneratorTest < Rails::Generators::TestCase
     tests HotComponentGenerator
     destination Rails.root.join("tmp/generators")
