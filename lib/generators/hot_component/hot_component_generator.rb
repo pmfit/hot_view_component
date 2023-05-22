@@ -5,6 +5,9 @@ class HotComponentGenerator < Rails::Generators::NamedBase # :nodoc:
 
   desc "Generates a Hot ViewComponent"
   argument :name, type: :string, banner: "[module/component_name]"
+  class_option :tailwind, type: :boolean, default: false
+  class_option :'skip-controller', type: :boolean, default: false
+  class_option :'skip-css', type: :boolean, default: false
 
   def copy_view_files
     @component_name = component_name
@@ -12,10 +15,16 @@ class HotComponentGenerator < Rails::Generators::NamedBase # :nodoc:
     @module_name = component_module
     @class_name = component_class
 
-    template "component.rb", "app/components/#{component_name}_component.rb"
-    template "view.html.erb", "app/components/#{component_name}_component/#{component_name}_component.html.erb"
-    template "stylesheet.css", "app/components/#{component_name}_component/#{component_name}_component.css"
-    template "controller.js", "app/components/#{component_name}_component/#{component_name}_component_controller.js"
+    if options[:tailwind]
+      template "tailwind/component.rb", "app/components/#{component_name}_component.rb"
+      template "tailwind/view.html.erb", "app/components/#{component_name}_component/#{component_name}_component.html.erb"
+      template "tailwind/controller.js", "app/components/#{component_name}_component/#{component_name}_component_controller.js" unless options[:'skip-controller']
+    else
+      template "component.rb", "app/components/#{component_name}_component.rb"
+      template "view.html.erb", "app/components/#{component_name}_component/#{component_name}_component.html.erb"
+      template "stylesheet.css", "app/components/#{component_name}_component/#{component_name}_component.css" unless options[:'skip-css']
+      template "controller.js", "app/components/#{component_name}_component/#{component_name}_component_controller.js" unless options[:'skip-css']
+    end
 
     # We need to update the stimulus manifest if running in node context (js-bundler or webpacker)
     rails_command "hot_view_component:manifest:update" unless Rails.root.join("config/importmap.rb").exist?

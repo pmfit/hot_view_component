@@ -1,0 +1,46 @@
+<% if @module_name.present? %>
+// Available in views as "<%= "#{@module_name}::#{@component_name}" %>(self)
+module <%= @module_name %>
+  class <%= @class_name %>Component < ViewComponent::Base
+    include HotViewComponent::Props
+    include HotViewComponent::Tailwind::ResponsiveHelper
+
+    def initialize(example:)
+      classes = []
+      classes.push(responsive_classes(example, <%= @class_name %>Styles::EXAMPLE_CLASSES))
+
+      @class = classes.join(' ')
+    end
+  end
+
+  class <%= @class_name %>Styles
+    EXAMPLE_STYLES = {
+      example: {
+        _: 'text-sans'
+      }
+    }
+  end
+end
+<% else %>
+class <%= @class_name %>Component < ViewComponent::Base
+  include HotViewComponent::Props
+  include HotViewComponent::Tailwind::ResponsiveHelper
+
+  prop :example, values: [:example]
+
+  def initialize(example: :example)
+    classes = []
+    classes.push(responsive_classes(example, <%= @class_name %>Styles::EXAMPLE_CLASSES))
+
+    @class = classes.join(' ')
+  end
+  
+  class <%= @class_name %>Styles
+    EXAMPLE_CLASSES = {
+      example: {
+        _: 'text-sans'
+      }
+    }
+  end
+end
+<% end %>

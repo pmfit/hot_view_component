@@ -2,9 +2,21 @@
 // Available in views as "<%= "#{@module_name}::#{@component_name}" %>(self)
 module <%= @module_name %>
   class <%= @class_name %>Component < ViewComponent::Base
+    extend HotViewComponent::Props
+
+    prop :example_prop, values: [:example]
+
+    def initialize(example_prop:)
+    end
   end
 end
 <% else %>
 class <%= @class_name %>Component < ViewComponent::Base
+  extend HotViewComponent::Props
+
+  prop :example_prop, values: [:example]
+
+  def initialize(example_prop:)
+  end
 end
 <% end %>

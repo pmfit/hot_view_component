@@ -1,6 +1,6 @@
 <div 
   data-controller="<%= @controller_name %>-component"
-  class="<%= @controller_name %>-component"
+  class="<%%= @class %>"
 >
   Implment <%= @component_name %> from <%= "app/components/#{component_name}" %>
 </div>
