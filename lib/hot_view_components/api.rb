@@ -3,17 +3,15 @@
 module HotViewComponents
   module Api
     def method_missing(name, *args, **kwargs, &)
-      puts name
       if name.ends_with?('Component')
-
         view = args[0]
 
         raise ArgumentError, 'Did not pass self to View Component' if view.blank?
 
         begin
-          component_class = Object.const_get(name.to_s)
-        rescue StandardError
           component_class = Object.const_get("#{self}::#{name}".to_s)
+        rescue StandardError
+          component_class = Object.const_get(name.to_s)
         end
 
         view.render(component_class.new(**kwargs), &)
