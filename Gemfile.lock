@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hot_view_components (0.1.10)
+    hot_view_components (0.1.11)
       rails (>= 7.0.4.3)
       stimulus-rails (~> 1.2.0)
       turbo-rails (~> 1.4.0)
