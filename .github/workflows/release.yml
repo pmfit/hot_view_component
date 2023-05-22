@@ -18,7 +18,20 @@ on:
         type: boolean
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Run tests
+        run: bin/rails test
+      
   version_bump:
+    needs: test
+
     if: github.ref == 'refs/heads/main'
 
     runs-on: ubuntu-latest
@@ -66,9 +79,20 @@ jobs:
           file_pattern: 'Gemfile.lock lib/hot_view_components/version.rb'
           tagging_message: 'v${{ steps.new_version.outputs.NEW_VERSION }}'
 
+  release_to_rubygems:
+    needs: version_bump
+
+    if: ${{ needs.version_bump.outputs.hasNewGemVersion }} == true
+
+    uses: pmfit/hot_view_components/.github/workflows/release-rubygems.yml@main
+    with:
+      debug: ${{ inputs.debug }}
+
   release_to_github_packages:
     needs: version_bump
+
     if: ${{ needs.version_bump.outputs.hasNewGemVersion }} == true
+
     uses: pmfit/hot_view_components/.github/workflows/release-github.yml@main
     with:
       debug: ${{ inputs.debug }}
