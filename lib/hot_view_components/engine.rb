@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'view_component'
 require_relative './action_view'
 require_relative './api'
 
@@ -18,7 +19,7 @@ module HotViewComponents
             app.autoloaders.main.eager_load_dir(path) if File.directory?(path)
           end
 
-          view_components = ViewComponent::Base.descendants
+          view_components = ::ViewComponent::Base.descendants
           view_components.each do |component|
             module_parent = component.module_parent
             should_extend = module_parent.present? && module_parent.name.to_s != 'Object' && !module_parent.ancestors.include?(HotViewComponents::Api)
