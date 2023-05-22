@@ -23,7 +23,7 @@ class HotComponentGenerator < Rails::Generators::NamedBase # :nodoc:
       template "component.rb", "app/components/#{component_name}_component.rb"
       template "view.html.erb", "app/components/#{component_name}_component/#{component_name}_component.html.erb"
       template "stylesheet.css", "app/components/#{component_name}_component/#{component_name}_component.css" unless options[:'skip-css']
-      template "controller.js", "app/components/#{component_name}_component/#{component_name}_component_controller.js" unless options[:'skip-css']
+      template "controller.js", "app/components/#{component_name}_component/#{component_name}_component_controller.js" unless options[:'skip-controller']
     end
 
     # We need to update the stimulus manifest if running in node context (js-bundler or webpacker)

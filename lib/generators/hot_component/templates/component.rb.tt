@@ -1,5 +1,5 @@
 <% if @module_name.present? %>
-// Available in views as "<%= "#{@module_name}::#{@component_name}" %>(self)
+# Available in views as <%= "#{@module_name}::#{@class_name}" %>(self)
 module <%= @module_name %>
   class <%= @class_name %>Component < ViewComponent::Base
     extend HotViewComponent::Props
@@ -11,6 +11,7 @@ module <%= @module_name %>
   end
 end
 <% else %>
+# Available in views as <%= "#{@class_name}" %>(self)"
 class <%= @class_name %>Component < ViewComponent::Base
   extend HotViewComponent::Props
 
