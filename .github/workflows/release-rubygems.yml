@@ -9,7 +9,7 @@ on:
         type: boolean
 jobs:
   release_to_github_packages:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
   
     runs-on: ubuntu-latest
 
@@ -26,12 +26,17 @@ jobs:
           ## limits ssh access and adds the ssh public keys of the listed GitHub users
           limit-access-to-users: ncphillips,chrisdmacrae
       
-      - name: Publish to RubyGems
+      - name: Set Credentials
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          printf -- "---\n:github: Bearer ${GITHUB_TOKEN}\n" > $HOME/.gem/credentials
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Publish to RubyGems
+        run: |
           gem build *.gemspec
           gem push *.gem
         env:
