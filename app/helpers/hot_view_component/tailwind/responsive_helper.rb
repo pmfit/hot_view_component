@@ -30,29 +30,29 @@ module HotViewComponent
         end
       end
 
-      def responsive_classes(prop, classes, get_classes_for_breakpoint = nil)
-        return '' if prop.blank? || classes.blank?
+      def responsive_classes(prop, classes = nil, &block)
+        return '' if prop.blank?
 
-        if get_classes_for_breakpoint.present? && get_classes_for_breakpoint.respond_to?(:call)
-          classes_for_breakpoint = self.defined_breakpoints.keys.each_with_object({}) do |breakpoint, breakpoints|
-            breakpoint_classes = get_classes_for_breakpoint.call(breakpoint)
+        if block.is_a? Proc
+          classes_for_breakpoint = defined_breakpoints.keys.each_with_object({}) do |breakpoint, breakpoints|
+            breakpoint_classes = block.call(breakpoint.to_sym)
 
-            breakpoints[breakpoint] = breakpoint_classes if breakpoint_classes
+            next unless breakpoint_classes.present?
+
+            breakpoints[breakpoint] = breakpoint_classes 
           end
 
           resolved_classes = classes_for_breakpoint.keys.map do |breakpoint|
             classes = classes_for_breakpoint[breakpoint]
 
-            return '' if classes.blank?
+            next if classes.blank?
 
             responsive_classes_for_prop(prop, classes)
           end
 
           return '' if resolved_classes.blank?
 
-          resolved_classes.filter do |value, i|
-            resolved_classes.find_index(value) == i
-          end
+          return resolved_classes.uniq.join(' ')
         end
 
         responsive_classes_for_prop(prop, classes)

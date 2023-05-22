@@ -36,44 +36,53 @@ module HotViewComponent::Tailwind
     end
 
     test 'returns all of the responsive classes matching the cross-section of two props when passed a lambda' do
-      a_classes = {
-        foo: { _: 'bar', sm: 'sm:bar', md: 'md:bar', lg: 'lg:bar', xl: 'xl:bar', '2xl': '2xl:bar' }
+      classes = {
+        top: { _: 'center', sm: 'sm:center', md: 'md:center', lg: 'lg:center', xl: 'xl:center', '2xl': '2xl:center' },
+        left: { _: 'left', sm: 'sm:left', md: 'md:left', lg: 'lg:left', xl: 'xl:left', '2xl': '2xl:left' }
       }
-      a_for_bar_classes = {
-        bar: a_classes[:foo]
+      align_for_direction_classes = {
+        vertical: classes,
+        horizontal: classes
       }
-      props = { foo: :foo, bar: :bar }
+      props = { align: :top, direction: :vertical }
+      result = responsive_classes(props[:align]) do |breakpoint|
+        current_direction = props[:direction].is_a?(Hash) ? props[:direction][breakpoint] : props[:direction]
 
-      assert_equal(
-        responsive_classes(props[:foo], a_classes, lambda do |_|
-            current_bar = props[:bar]
-            current_classes = a_for_bar_classes[current_bar]
+        return if current_direction.blank?
 
-            current_classes[props[:foo]]
-          end),
-        false)
+        breakpoint_classes = align_for_direction_classes[current_direction]
+
+        return if breakpoint_classes.blank?
+
+        breakpoint_classes
+      end
+
+      assert_equal(result, 'center')
     end
 
     test 'returns all of the responsive classes matching the cross-section of two responsive props when passed a lambda' do
-      a_classes = {
-        foo: { _: 'bar', sm: 'sm:bar', md: 'md:bar', lg: 'lg:bar', xl: 'xl:bar', '2xl': '2xl:bar' }
+      classes = {
+        top: { _: 'center', sm: 'sm:center', md: 'md:center', lg: 'lg:center', xl: 'xl:center', '2xl': '2xl:center' },
+        left: { _: 'left', sm: 'sm:left', md: 'md:left', lg: 'lg:left', xl: 'xl:left', '2xl': '2xl:left' }
       }
-      a_for_bar_classes = {
-        bar: a_classes[:foo]
+      align_for_direction_classes = {
+        vertical: classes,
+        horizontal: classes
       }
-      props = { foo: { _: :foo, sm: :foo }, bar: { _: :bar, sm: :bar} }
+      props = { align: { _: :top, sm: :top }, direction: { _: :vertical, sm: :horizontal } }
+      result = responsive_classes(props[:align]) do |breakpoint|
+        current_direction = props[:direction].is_a?(Hash) ? props[:direction][breakpoint] : props[:direction]
 
-      assert_equal(responsive_classes(props[:foo], a_classes, lambda do |breakpoint|
-        current_bar = props[:bar][breakpoint]
+        return if current_direction.blank?
 
-        return if current_bar.blank?
+        breakpoint_classes = align_for_direction_classes[current_direction]
 
-        current_classes = a_for_bar_classes[current_bar]
+        return if breakpoint_classes.blank?
 
-        return if current_classes.blank?
+        breakpoint_classes[breakpoint]
+      end
 
-        current_classes[props[:foo]]
-      end), false)
+      assert_equal(result, "center sm:left")
     end
   end
 end
