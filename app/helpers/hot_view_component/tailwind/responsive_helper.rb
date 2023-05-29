@@ -25,7 +25,7 @@ module HotViewComponent
       def self.included(base)
         base.extend(HotViewComponent::Tailwind::ClassMethods)
 
-        def defined_breakpoints
+        def breakpoints
           HotViewComponent::Tailwind::DEFAULT_BREAKPOINTS
         end
       end
@@ -34,7 +34,7 @@ module HotViewComponent
         return '' if prop.blank?
 
         if block.is_a? Proc
-          classes_for_breakpoint = defined_breakpoints.keys.each_with_object({}) do |breakpoint, breakpoints|
+          classes_for_breakpoint = breakpoints.keys.each_with_object({}) do |breakpoint, breakpoints|
             breakpoint_classes = block.call(breakpoint.to_sym)
 
             next unless breakpoint_classes.present?
