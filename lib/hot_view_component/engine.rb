@@ -13,20 +13,18 @@ module HotViewComponent
 
     initializer "hot_view_component.modules", after: "importmap.assets" do |app|
       app.config.after_initialize do
-        unless app.config.eager_load
-          app.autoloaders.main.on_setup do
-            paths = Dir.glob(app.root.join('app/components/**/*.rb'))
+        app.autoloaders.main.on_setup do
+          paths = Dir.glob(app.root.join('app/components/**/*.rb'))
 
-            paths.each do |path|
-              app.autoloaders.main.load_file(path)
-            end
+          paths.each do |path|
+            app.autoloaders.main.load_file(path)
+          end
 
-            view_components = ::ViewComponent::Base.descendants
-            view_components.each do |component|
-              module_parent = component.module_parent
-              should_extend = module_parent.present? && module_parent.name.to_s != 'Object' && !module_parent.ancestors.include?(HotViewComponent::Api)
-              module_parent.extend HotViewComponent::Api if should_extend
-            end
+          view_components = ::ViewComponent::Base.descendants
+          view_components.each do |component|
+            module_parent = component.module_parent
+            should_extend = module_parent.present? && module_parent.name.to_s != 'Object' && !module_parent.ancestors.include?(HotViewComponent::Api)
+            module_parent.extend HotViewComponent::Api if should_extend
           end
         end
       end
